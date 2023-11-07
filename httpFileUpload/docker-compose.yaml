@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  httpupl:
+    image: atayalan/http-uploader:qa
+    container_name: httpupl_qa
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - 172.31.60.121:8080:8080
+    restart: unless-stopped
+

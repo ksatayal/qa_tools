@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  metrics:
+    image: atayalan/metrics:qa
+    container_name: metrics_qa
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    environment:
+      REDIS_SVC_IP: '127.0.0.1'
+      REDIS_SVC_PORT: 6379
+      REDIS_DBNUM_CELERY_TASKS: 0
+      REDIS_DBNUM_CMDQUEUE:  3
+      REDIS_DBNUM_CMDRES_JSON: 5
+      TRD_SVC_IP_PORT: '10.22.101.28:10287'
+      #REDIS_PASSWORD: passwordOfTimeseriesDataStoredAtRedis
+    restart: unless-stopped
+    entrypoint: ["/usr/local/bin/celery","-A","peri_tasks", "worker", "-B","-l", "DEBUG","-f","/tmp/qa_metrics.log"]
+    network_mode: "host"
+    depends_on:
+      - metrics_cache
+
+  metrics_cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    # comment: redis-server --requirepass passwordOfTimeseriesDataStoredAtRedis to set passeword use in redis.Redis(password=?)'
+    volumes:
+      - metrics_cache:/data
+    networks:
+      - default
+
+volumes:
+  metrics_cache:
+    driver: local

@@ -320,7 +320,7 @@ def visualize_pv_usage(dfPv,vmDut,outfn="/tmp/PV-usage.png"):
     dfHourly,bgn,end = transform_to_hourly(dfPv)
     figTitle = f"Dut Ataya DATA @{vmDut}: {bgn.strftime('%b %d')} .. {end.strftime('%b %d')} ({end-bgn})"
 
-    df1 = dfHourly[["utc_timestamp_min","storage-loki","influxdb2","persistence-rmq","prometheus","mongod-data","redis-data","elasticsearch"]]
+    df1 = dfHourly[["utc_timestamp_min","loki","influxdb2","rmq","prom1","mongod","redis","elasticsearch"]]
     print(df1)
     #add DataFrames to subplots
     df1.plot(x="utc_timestamp_min",title=figTitle)

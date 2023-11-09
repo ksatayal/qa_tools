@@ -258,7 +258,7 @@ def transform_to_hourly(df1):
 
     bgn = dfHourly["utc_timestamp_min"][0]
     end = dfHourly["utc_timestamp_min"].iloc[-1]
-    print(f"{bgn.strftime('%m%d')} => {end}, {end-bgn}")
+    #print(f"{bgn.strftime('%m%d')} => {end}, {end-bgn}")
 
     return dfHourly,bgn,end
 
@@ -268,10 +268,10 @@ def visualize_nf_usage(dfPv,vmDut,outfn="/tmp/fgc-NF-usage.png"):
     figTitle = f"Dut Ataya CP-fgc-NF @{vmDut}: {bgn.strftime('%b %d')} .. {end.strftime('%b %d')} ({end-bgn})"
 
     df1 = dfHourly[["utc_timestamp_min","Mem_amfctrl","Mem_smfctrl","Mem_upfcctrl","Mem_ausfctrl","Mem_udmctrl"]]
-    print(df1)
+    #print(df1)
 
     df2 = dfHourly[["utc_timestamp_min","Pid_amfctrl","Pid_smfctrl","Pid_upfcctrl","Pid_ausfctrl","Pid_udmctrl"]]
-    print(df2)
+    #print(df2)
 
     #define subplot layout
     fig, axes = plt.subplots(nrows=2, ncols=1)
@@ -321,7 +321,7 @@ def visualize_pv_usage(dfPv,vmDut,outfn="/tmp/PV-usage.png"):
     figTitle = f"Dut Ataya DATA @{vmDut}: {bgn.strftime('%b %d')} .. {end.strftime('%b %d')} ({end-bgn})"
 
     df1 = dfHourly[["utc_timestamp_min","loki","influxdb2","rmq","prom1","mongod","redis","elasticsearch"]]
-    print(df1)
+    #print(df1)
     #add DataFrames to subplots
     df1.plot(x="utc_timestamp_min",title=figTitle)
     plt.savefig(outfn)

@@ -151,19 +151,28 @@ def every_30_minutes(vmDut,vmFh="", since_utc="",daysBefore=-1):
 
     if vmFh != "":
         dfGnbUsage = etl.extract_transform_gNB_usage(vmFh,seqTimestampMinUtc)
-        #print(dfGnbUsage)
         if dfGnbUsage is not None:
-
+            print(dfGnbUsage)
             outfn = f"/tmp/{vmFh}-gnb-usages-{now.strftime('%m%d')}{daysBefore}d.png"
             bgn = dfGnbUsage["utc_timestamp_min"][0]
             end = dfGnbUsage["utc_timestamp_min"].iloc[-1]
             print(f"{bgn} => {end}, {end-bgn}")
 
+            outfn = f"/tmp/{vmFh}-gnb-usages-{now.strftime('%m%d')}{daysBefore}d.csv"
+            dfGnbUsage.to_csv(outfn,index=True,encoding="UTF-8")
+            if os.path.exists(outfn):
+                print(f"pv raw data csv saved at {outfn}")
+                etl.store_plotted_fig(outfn, remote_path="/home/vm10131/rsyncSrc")
             etl.visualize_gNB_usage(dfGnbUsage,outfn)
             if os.path.exists(outfn):
                 print(f"plot figure saved at {outfn}")
                 etl.store_plotted_fig(outfn, remote_path="/home/vm10131/rsyncSrc")
 
+    outfn = f"/tmp/{vmDut}-dp-usages-{now.strftime('%m%d')}{daysBefore}d.csv"
+    dfN3n6Usage.to_csv(outfn,index=True,encoding="UTF-8")
+    if os.path.exists(outfn):
+        print(f"pv raw data csv saved at {outfn}")
+        etl.store_plotted_fig(outfn, remote_path="/home/vm10131/rsyncSrc")
     outfn = f"/tmp/{vmDut}-dp-usages-{now.strftime('%m%d')}{daysBefore}d.png"
     etl.visualize_dp_usage(dfN3n6Usage,vmDut,outfn)
     if os.path.exists(outfn):

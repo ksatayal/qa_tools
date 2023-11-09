@@ -320,12 +320,12 @@ def visualize_dp_usage(dfDpUsage,vmDut,outfn="/tmp/DP-usage.png"):
 def visualize_pv_usage(dfPv,vmDut,outfn="/tmp/PV-usage.png"):
 
     dfHourly,bgn,end = transform_to_hourly(dfPv)
-    figTitle = f"Dut Ataya DATA @{vmDut}: {bgn.strftime('%b %d')} .. {end.strftime('%b %d')} ({end-bgn})"
+    figTitle = f"Ataya disk usage@{vmDut}: till {end.strftime('%m-%dT%H:%M')} ({end-bgn})"
 
     df1 = dfHourly[["utc_timestamp_min","loki","influxdb2","rmq","prom1","mongod","redis","elasticsearch"]]
     #print(df1)
     #add DataFrames to subplots
-    df1.plot(x="utc_timestamp_min",title=figTitle)
+    df1.plot(x="utc_timestamp_min",title=figTitle,ylabel="Dissk Usage (in MB)")
     plt.savefig(outfn)
 
 

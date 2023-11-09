@@ -36,12 +36,12 @@ def extract_from_timeseries_db(pyatsHost,seqTimestampMinUtc):
 
     dicPvUsage = {
         "utc_timestamp_min": [],
-        "storage-loki": [],
+        "loki": [],
         "influxdb2": [],
-        "persistence-rmq": [],
-        "prometheus": [],
-        "mongod-data": [],
-        "redis-data": [],
+        "rmq": [],
+        "prom1": [],
+        "mongod": [],
+        "redis": [],
         "elasticsearch": []
     }
 

@@ -1,0 +1,14 @@
+
+version: '3.7'
+services:
+  webhookd:
+    image: atayalan/webhookee:latest
+    container_name: webhookd
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./logs:/logs
+    ports:
+      - 9090:9090
+    restart: unless-stopped

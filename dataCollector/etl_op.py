@@ -296,7 +296,7 @@ def visualize_gNB_usage(dfGnbUsage,outfn="/tmp/gNB-usage.png"):
 
     #add DataFrames to subplots
     df1.plot(ax=axes[0],x="utc_timestamp_min",title=figTitle)
-    df2.plot(ax=axes[1],x="utc_timestamp_min")
+    df2.plot(ax=axes[1],x="utc_timestamp_min",kind="bar")
     plt.savefig(outfn)
 
 def visualize_dp_usage(dfDpUsage,vmDut,outfn="/tmp/DP-usage.png"):

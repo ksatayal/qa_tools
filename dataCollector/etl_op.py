@@ -277,7 +277,7 @@ def visualize_nf_usage(dfPv,vmDut,outfn="/tmp/fgc-NF-usage.png"):
     fig, axes = plt.subplots(nrows=2, ncols=1)
 
     #add DataFrames to subplots
-    df1.plot(ax=axes[0],x="utc_timestamp_min",title=figTitle)
+    df1.plot(ax=axes[0],x="utc_timestamp_min",title=figTitle,ylabel="Memory Usage (in KB)")
     df2.plot(ax=axes[1],x="utc_timestamp_min")
     plt.savefig(outfn)
 

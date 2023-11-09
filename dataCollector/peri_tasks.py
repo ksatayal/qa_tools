@@ -116,7 +116,7 @@ def every_30_minutes(vmDut,vmFh="", since_utc="",daysBefore=-1):
             print(f"NF raw data csv saved at {outfn}")
             etl.store_plotted_fig(outfn, remote_path="/home/vm10131/rsyncSrc")
 
-        outfn = f"/tmp/{vmDut}-NF-usages-{now.strftime('%m%d')}{daysBefore}d.png"
+        outfn = f"/tmp/{vmDut}-nf-usages-{now.strftime('%m%d')}{daysBefore}d.png"
         etl.visualize_nf_usage(dfNf,vmDut,outfn=outfn)
         if os.path.exists(outfn):
             print(f"plot figure saved at {outfn}")
@@ -154,7 +154,7 @@ def every_30_minutes(vmDut,vmFh="", since_utc="",daysBefore=-1):
         print(dfGnbUsage)
         if dfGnbUsage is not None:
 
-            outfn = f"/tmp/{vmFh}-gnb-usages-{now.strftime('%m%d')}{daysBefore}.png"
+            outfn = f"/tmp/{vmFh}-gnb-usages-{now.strftime('%m%d')}{daysBefore}d.png"
             bgn = dfGnbUsage["utc_timestamp_min"][0]
             end = dfGnbUsage["utc_timestamp_min"].iloc[-1]
             print(f"{bgn} => {end}, {end-bgn}")
@@ -164,7 +164,7 @@ def every_30_minutes(vmDut,vmFh="", since_utc="",daysBefore=-1):
                 print(f"plot figure saved at {outfn}")
                 etl.store_plotted_fig(outfn, remote_path="/home/vm10131/rsyncSrc")
 
-    outfn = f"/tmp/{vmDut}-dp-usages-{now.strftime('%m%d')}{daysBefore}.png"
+    outfn = f"/tmp/{vmDut}-dp-usages-{now.strftime('%m%d')}{daysBefore}d.png"
     etl.visualize_dp_usage(dfN3n6Usage,vmDut,outfn)
     if os.path.exists(outfn):
         print(f"plot figure saved at {outfn}")

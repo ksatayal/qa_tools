@@ -147,11 +147,11 @@ def every_30_minutes(vmDut,vmFh="", since_utc="",daysBefore=-1):
             print(f"{k} > {len(v)}")
 
     dfN3n6Usage = etl.transform_cal_MBps(dicDpUsage)
-    print(dfN3n6Usage)
+    #print(dfN3n6Usage)
 
     if vmFh != "":
         dfGnbUsage = etl.extract_transform_gNB_usage(vmFh,seqTimestampMinUtc)
-        print(dfGnbUsage)
+        #print(dfGnbUsage)
         if dfGnbUsage is not None:
 
             outfn = f"/tmp/{vmFh}-gnb-usages-{now.strftime('%m%d')}{daysBefore}d.png"

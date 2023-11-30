@@ -31,7 +31,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	// Get handler for filename, size and headers
 	file, handler, err := r.FormFile("myFile")
 	if err != nil {
-		fmt.Printf("Error Retrieving the File from %+v /w error %+v",r.RemoteAddr,err)
+		fmt.Printf("Error Retrieving the File from %+v\n /w error %+v\n",r.RemoteAddr,err)
 		//fmt.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

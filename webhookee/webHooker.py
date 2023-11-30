@@ -2,6 +2,7 @@ import falcon
 import base64
 import json
 import os
+from datetime import datetime, timedelta, timezone
 
 user_accounts = { "user1": "mypass1", "admin": "P@ssw0rd" }
 
@@ -65,7 +66,9 @@ class WhSessionInfo:
 
     @falcon.before(Authorize())
     def on_post(self, req, resp):
-        evtData = req.context['doc']
+        evtData = req.context['doc'].copy()
+        now = datetime.now(timezone.utc)
+        evtData["ts_utc"] = now.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
         print(f"{json.dumps(evtData,indent=2)}")
         self.logger.info(f"{evtData}")
         resp.content_type = 'application/json'

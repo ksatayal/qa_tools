@@ -7,6 +7,6 @@ services:
       context: ./
       dockerfile: ./Dockerfile
     ports:
-      - 172.31.60.121:8080:8080
+      - 192.168.6.121:8080:8080
     restart: unless-stopped
 

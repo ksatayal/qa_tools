@@ -83,7 +83,8 @@ def every_minute(vmDut,vmFh, vmVrtr):
 def every_30_minutes(vmDut,vmFh="", since_utc="",daysBefore=-1):
 
     resp = requests.get(f'http://{TRD_SVC_IP_PORT}/dut_info/{vmDut}')
-    print(r.json())
+    dicDutInfo = resp.json()
+    dutRel = dicDutInfo.get("REL","")
 
     now = datetime.now(timezone.utc)
     #print(f"{now}: task {__name__} got {vmDut}, {vmFh},")
@@ -113,13 +114,13 @@ def every_30_minutes(vmDut,vmFh="", since_utc="",daysBefore=-1):
         dfNf = pd.DataFrame(dicNfUsage)
         dfNf["utc_timestamp_min"] = pd.to_datetime(dfNf["utc_timestamp_min"])
         #print(dfNf)
-        outfn = f"/tmp/{vmDut}-nf-rawdata-{now.strftime('%m%d')}.csv"
+        outfn = f"/tmp/{vmDut}-{dutRel}-nf-{now.strftime('%m%d')}.csv"
         dfNf.to_csv(outfn,index=True,encoding="UTF-8")
         if os.path.exists(outfn):
             print(f"NF raw data csv saved at {outfn}")
             etl.store_plotted_fig(outfn, remote_path="/home/vm10131/rsyncSrc")
 
-        outfn = f"/tmp/{vmDut}-nf-usages-{now.strftime('%m%d')}{daysBefore}d.png"
+        outfn = f"/tmp/{vmDut}-{dutRel}-nf-{now.strftime('%m%d')}{daysBefore}d.png"
         etl.visualize_nf_usage(dfNf,vmDut,outfn=outfn)
         if os.path.exists(outfn):
             print(f"plot figure saved at {outfn}")
@@ -134,12 +135,12 @@ def every_30_minutes(vmDut,vmFh="", since_utc="",daysBefore=-1):
         dfPv = pd.DataFrame(dicPvUsage)
         dfPv["utc_timestamp_min"] = pd.to_datetime(dfPv["utc_timestamp_min"])
         #print(dfPv)
-        outfn = f"/tmp/{vmDut}-pv-rawdata-{now.strftime('%m%d')}.csv"
+        outfn = f"/tmp/{vmDut}-{dutRel}-pv-{now.strftime('%m%d')}{daysBefore}d.csv"
         dfPv.to_csv(outfn,index=True,encoding="UTF-8")
         if os.path.exists(outfn):
             print(f"pv raw data csv saved at {outfn}")
             etl.store_plotted_fig(outfn, remote_path="/home/vm10131/rsyncSrc")
-        outfn = f"/tmp/{vmDut}-pv-usages-{now.strftime('%m%d')}{daysBefore}d.png"
+        outfn = f"/tmp/{vmDut}-{dutRel}-pv-{now.strftime('%m%d')}{daysBefore}d.png"
         etl.visualize_pv_usage(dfPv,vmDut,outfn=outfn)
         if os.path.exists(outfn):
             print(f"plot figure saved at {outfn}")
@@ -172,12 +173,12 @@ def every_30_minutes(vmDut,vmFh="", since_utc="",daysBefore=-1):
                 print(f"plot figure saved at {outfn}")
                 etl.store_plotted_fig(outfn, remote_path="/home/vm10131/rsyncSrc")
 
-    outfn = f"/tmp/{vmDut}-dp-usages-{now.strftime('%m%d')}{daysBefore}d.csv"
+    outfn = f"/tmp/{vmDut}-{dutRel}-dp-{now.strftime('%m%d')}{daysBefore}d.csv"
     dfN3n6Usage.to_csv(outfn,index=True,encoding="UTF-8")
     if os.path.exists(outfn):
         print(f"pv raw data csv saved at {outfn}")
         etl.store_plotted_fig(outfn, remote_path="/home/vm10131/rsyncSrc")
-    outfn = f"/tmp/{vmDut}-dp-usages-{now.strftime('%m%d')}{daysBefore}d.png"
+    outfn = f"/tmp/{vmDut}-{dutRel}-dp-{now.strftime('%m%d')}{daysBefore}d.png"
     etl.visualize_dp_usage(dfN3n6Usage,vmDut,outfn)
     if os.path.exists(outfn):
         print(f"plot figure saved at {outfn}")

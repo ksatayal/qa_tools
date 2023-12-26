@@ -82,6 +82,9 @@ def every_minute(vmDut,vmFh, vmVrtr):
 @appCelery.task
 def every_30_minutes(vmDut,vmFh="", since_utc="",daysBefore=-1):
 
+    resp = requests.get(f'http://{TRD_SVC_IP_PORT}/dut_info/{vmDut}')
+    print(r.json())
+
     now = datetime.now(timezone.utc)
     #print(f"{now}: task {__name__} got {vmDut}, {vmFh},")
 
